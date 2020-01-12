@@ -39,7 +39,7 @@ func transposeKVtoData(symbols *model.TypeTable, kvtab *model.DataTable) (ret *m
 		tf.ArraySplitter = arraySplitter.Value
 
 		if symbols.FieldByName(tf.ObjectType, tf.FieldName) != nil {
-			report.ReportError("DuplicateKVField", fieldName.String())
+			report.Error("DuplicateKVField", fieldName.String())
 		}
 
 		symbols.AddField(&tf, kvtab, row)

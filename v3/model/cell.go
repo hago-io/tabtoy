@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+
 	"github.com/davyxu/tabtoy/util"
 )
 
@@ -13,20 +14,20 @@ type Cell struct {
 }
 
 // 全拷贝
-func (self *Cell) CopyFrom(c *Cell) {
-	self.Value = c.Value
-	self.Row = c.Row
-	self.Col = c.Col
-	self.Table = c.Table
+func (cell *Cell) CopyFrom(c *Cell) {
+	cell.Value = c.Value
+	cell.Row = c.Row
+	cell.Col = c.Col
+	cell.Table = c.Table
 }
 
-func (self *Cell) String() string {
+func (cell *Cell) String() string {
 
 	var file, sheet string
-	if self.Table != nil {
-		file = self.Table.FileName
-		sheet = self.Table.SheetName
+	if cell.Table != nil {
+		file = cell.Table.FileName
+		sheet = cell.Table.SheetName
 	}
 
-	return fmt.Sprintf("'%s' @%s|%s(%s)", self.Value, file, sheet, util.R1C1ToA1(self.Row+1, self.Col+1))
+	return fmt.Sprintf("'%s' @%s|%s(%s)", cell.Value, file, sheet, util.R1C1ToA1(cell.Row+1, cell.Col+1))
 }

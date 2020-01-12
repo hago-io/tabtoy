@@ -1,10 +1,11 @@
 package compiler
 
 import (
+	"strings"
+
 	"github.com/davyxu/tabtoy/v3/helper"
 	"github.com/davyxu/tabtoy/v3/model"
 	"github.com/davyxu/tabtoy/v3/report"
-	"strings"
 )
 
 func Loadheader(sheet helper.TableSheet, tab *model.DataTable, resolveTableType string, typeTab *model.TypeTable) {
@@ -50,7 +51,7 @@ func checkHeaderTypes(tab *model.DataTable, typeTab *model.TypeTable) {
 		if !model.PrimitiveExists(header.TypeInfo.FieldType) &&
 			!typeTab.ObjectExists(header.TypeInfo.FieldType) { // 对象检查
 
-			report.ReportError("UnknownFieldType", header.TypeInfo.FieldType, header.Cell.String())
+			report.Error("UnknownFieldType", header.TypeInfo.FieldType, header.Cell.String())
 		}
 	}
 
@@ -78,11 +79,11 @@ func resolveHeaderFields(tab *model.DataTable, tableObjectType string, typeTab *
 
 		tf := typeTab.FieldByName(tableObjectType, header.Cell.Value)
 		if tf == nil {
-			report.ReportError("HeaderFieldNotDefined", header.Cell.String())
+			report.Error("HeaderFieldNotDefined", header.Cell.String())
 		}
 
 		if headerValueExists(index+1, header.Cell.Value, tab.Headers) && !tf.IsArray() {
-			report.ReportError("DuplicateHeaderField", header.Cell.String())
+			report.Error("DuplicateHeaderField", header.Cell.String())
 		}
 
 		// 解析好的类型

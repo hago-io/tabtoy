@@ -2,9 +2,10 @@ package helper
 
 import (
 	"errors"
-	"github.com/davyxu/tabtoy/v3/report"
 	"path/filepath"
 	"sync"
+
+	"github.com/davyxu/tabtoy/v3/report"
 )
 
 type FileGetter interface {
@@ -20,21 +21,21 @@ type FileLoader struct {
 	UseGBKCSV bool
 }
 
-func (self *FileLoader) AddFile(filename string) {
+func (loader *FileLoader) AddFile(filename string) {
 
-	self.inputFile = append(self.inputFile, filename)
+	loader.inputFile = append(loader.inputFile, filename)
 }
 
-func (self *FileLoader) Commit() {
+func (loader *FileLoader) Commit() {
 
 	var task sync.WaitGroup
-	task.Add(len(self.inputFile))
+	task.Add(len(loader.inputFile))
 
-	for _, inputFileName := range self.inputFile {
+	for _, inputFileName := range loader.inputFile {
 
 		go func(fileName string) {
 
-			self.fileByName.Store(fileName, loadFileByExt(fileName, self.UseGBKCSV))
+			loader.fileByName.Store(fileName, loadFileByExt(fileName, loader.UseGBKCSV))
 
 			task.Done()
 
@@ -44,7 +45,7 @@ func (self *FileLoader) Commit() {
 
 	task.Wait()
 
-	self.inputFile = self.inputFile[0:0]
+	loader.inputFile = loader.inputFile[0:0]
 }
 
 func loadFileByExt(filename string, useGBKCSV bool) interface{} {
@@ -76,7 +77,7 @@ func loadFileByExt(filename string, useGBKCSV bool) interface{} {
 		}
 
 	default:
-		report.ReportError("UnknownInputFileExtension", filename)
+		report.Error("UnknownInputFileExtension", filename)
 	}
 
 	return tabFile

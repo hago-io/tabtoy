@@ -20,17 +20,17 @@ func getErrorDesc(id string) string {
 	return ""
 }
 
-func (self *TableError) Error() string {
+func (err *TableError) Error() string {
 
 	var sb strings.Builder
 
 	sb.WriteString("TableError.")
-	sb.WriteString(self.ID)
+	sb.WriteString(err.ID)
 	sb.WriteString(" ")
-	sb.WriteString(getErrorDesc(self.ID))
+	sb.WriteString(getErrorDesc(err.ID))
 	sb.WriteString(" | ")
 
-	for index, c := range self.context {
+	for index, c := range err.context {
 		if index > 0 {
 			sb.WriteString(" ")
 		}
@@ -41,7 +41,7 @@ func (self *TableError) Error() string {
 	return sb.String()
 }
 
-func ReportError(id string, context ...interface{}) *TableError {
+func Error(id string, context ...interface{}) {
 
 	panic(&TableError{
 		ID:      id,

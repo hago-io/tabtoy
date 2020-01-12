@@ -12,9 +12,9 @@ const (
 	TypeUsage_Enum                          // 枚举
 )
 
-func (self TypeUsage) String() string {
+func (tu TypeUsage) String() string {
 
-	switch self {
+	switch tu {
 	case TypeUsage_HeaderStruct:
 		return "表头"
 	case TypeUsage_Enum:

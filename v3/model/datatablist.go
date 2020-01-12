@@ -4,9 +4,9 @@ type DataTableList struct {
 	data []*DataTable
 }
 
-func (self *DataTableList) GetDataTable(headerType string) *DataTable {
+func (tl *DataTableList) GetDataTable(headerType string) *DataTable {
 
-	for _, tab := range self.data {
+	for _, tab := range tl.data {
 		if tab.HeaderType == headerType {
 			return tab
 		}
@@ -15,13 +15,13 @@ func (self *DataTableList) GetDataTable(headerType string) *DataTable {
 	return nil
 }
 
-func (self *DataTableList) AddDataTable(t *DataTable) {
-	self.data = append(self.data, t)
+func (tl *DataTableList) AddDataTable(t *DataTable) {
+	tl.data = append(tl.data, t)
 }
-func (self *DataTableList) AllTables() []*DataTable {
-	return self.data
+func (tl *DataTableList) AllTables() []*DataTable {
+	return tl.data
 }
 
-func (self *DataTableList) Count() int {
-	return len(self.data)
+func (tl *DataTableList) Count() int {
+	return len(tl.data)
 }

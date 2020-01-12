@@ -1,11 +1,12 @@
 package compiler
 
 import (
-	"github.com/davyxu/tabtoy/util"
-	"github.com/davyxu/tabtoy/v3/model"
 	"reflect"
 	"strconv"
 	"strings"
+
+	"github.com/davyxu/tabtoy/util"
+	"github.com/davyxu/tabtoy/v3/model"
 )
 
 func StringToValue(str string, value interface{}, tf *model.TypeDefine, symbols *model.TypeTable) error {
@@ -35,7 +36,7 @@ func StringToValue(str string, value interface{}, tf *model.TypeDefine, symbols 
 		for index, strValue := range splitedData {
 
 			elemElem := slice.Index(index)
-			err, handled = util.StringToPrimitive(strValue, elemElem.Addr().Interface())
+			err, _ = util.StringToPrimitive(strValue, elemElem.Addr().Interface())
 			if err != nil {
 				return err
 			}
@@ -65,6 +66,4 @@ func StringToValue(str string, value interface{}, tf *model.TypeDefine, symbols 
 
 	// 内建类型定义与model.InitBuiltinTypes中不匹配
 	panic("unhandled value: " + str)
-
-	return nil
 }

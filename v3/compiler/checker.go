@@ -33,7 +33,7 @@ func checkRepeat(globals *model.Globals) {
 
 					if _, ok := checker[inputCell.Value]; ok {
 
-						report.ReportError("DuplicateValueInMakingIndex", inputCell.String())
+						report.Error("DuplicateValueInMakingIndex", inputCell.String())
 
 					} else {
 						checker[inputCell.Value] = inputCell
@@ -73,7 +73,7 @@ func checkEnumValue(globals *model.Globals) {
 
 				resolvedType := globals.Types.ResolveEnumValue(header.TypeInfo.FieldType, inputCell.Value)
 				if resolvedType == "" {
-					report.ReportError("UnknownEnumValue", header.TypeInfo.FieldType, inputCell.String())
+					report.Error("UnknownEnumValue", header.TypeInfo.FieldType, inputCell.String())
 				}
 
 			}

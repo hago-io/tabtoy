@@ -21,25 +21,25 @@ func LoadTypeTable(typeTab *model.TypeTable, indexGetter helper.FileGetter, file
 
 		for row := 1; row < len(tab.Rows); row++ {
 
-			var objtype model.TypeDefine
+			var objType model.TypeDefine
 
-			if !ParseRow(&objtype, tab, row, typeTab) {
+			if !ParseRow(&objType, tab, row, typeTab) {
 				continue
 			}
 
-			if typeTab.FieldByName(objtype.ObjectType, objtype.FieldName) != nil {
+			if typeTab.FieldByName(objType.ObjectType, objType.FieldName) != nil {
 
 				cell := tab.GetValueByName(row, "字段名")
 
 				if cell != nil {
-					report.ReportError("DuplicateTypeFieldName", cell.String(), objtype.ObjectType, objtype.FieldName)
+					report.Error("DuplicateTypeFieldName", cell.String(), objType.ObjectType, objType.FieldName)
 				} else {
-					report.ReportError("InvalidTypeTable", objtype.ObjectType, objtype.FieldName, tab.FileName)
+					report.Error("InvalidTypeTable", objType.ObjectType, objType.FieldName, tab.FileName)
 				}
 
 			}
 
-			typeTab.AddField(&objtype, tab, row)
+			typeTab.AddField(&objType, tab, row)
 		}
 
 	}
@@ -47,7 +47,7 @@ func LoadTypeTable(typeTab *model.TypeTable, indexGetter helper.FileGetter, file
 	return nil
 }
 
-func typeTable_CheckEnumValueEmpty(typeTab *model.TypeTable) {
+func typeTableCheckEnumValueEmpty(typeTab *model.TypeTable) {
 	linq.From(typeTab.Raw()).WhereT(func(td *model.TypeData) bool {
 
 		return td.Define.Kind == model.TypeUsage_Enum && td.Define.Value == ""
@@ -55,11 +55,11 @@ func typeTable_CheckEnumValueEmpty(typeTab *model.TypeTable) {
 
 		cell := td.Tab.GetValueByName(td.Row, "值")
 
-		report.ReportError("EnumValueEmpty", cell.String())
+		report.Error("EnumValueEmpty", cell.String())
 	})
 }
 
-func typeTable_CheckDuplicateEnumValue(typeTab *model.TypeTable) {
+func typeTableCheckDuplicateEnumValue(typeTab *model.TypeTable) {
 
 	type NameValuePair struct {
 		Name  string
@@ -80,7 +80,7 @@ func typeTable_CheckDuplicateEnumValue(typeTab *model.TypeTable) {
 
 			cell := td.Tab.GetValueByName(td.Row, "值")
 
-			report.ReportError("DuplicateEnumValue", cell.String())
+			report.Error("DuplicateEnumValue", cell.String())
 		}
 
 		checker[key] = td
@@ -89,7 +89,7 @@ func typeTable_CheckDuplicateEnumValue(typeTab *model.TypeTable) {
 
 func CheckTypeTable(typeTab *model.TypeTable) {
 
-	typeTable_CheckEnumValueEmpty(typeTab)
+	typeTableCheckEnumValueEmpty(typeTab)
 
-	typeTable_CheckDuplicateEnumValue(typeTab)
+	typeTableCheckDuplicateEnumValue(typeTab)
 }

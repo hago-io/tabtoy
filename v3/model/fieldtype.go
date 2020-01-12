@@ -13,7 +13,6 @@ type FieldType struct {
 }
 
 // 将表中输入的字段类型转换为各种语言类型
-
 var (
 	FieldTypes = []*FieldType{
 		{"int16", "int16", "Int16", "int", "0"},

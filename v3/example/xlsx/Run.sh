@@ -3,7 +3,7 @@
 # 默认设置代理, 国内专用
 export GOPROXY=https://goproxy.io
 
-go build -v -o ./tabtoy github.com/davyxu/tabtoy
+go build -v -o ./tabtoy ../../../ #github.com/davyxu/tabtoy
 
 ./tabtoy -mode=v3 \
 -index=Index.xlsx \
@@ -17,4 +17,4 @@ go build -v -o ./tabtoy github.com/davyxu/tabtoy
 
 cp ../json/table_gen.json ../java/cfg
 
-rm -f tabtoy
+#rm -f tabtoy

@@ -6,28 +6,28 @@ type DataRow struct {
 	tab   *DataTable
 }
 
-func (self *DataRow) Cells() []*Cell {
-	return self.cells
+func (row *DataRow) Cells() []*Cell {
+	return row.cells
 }
 
-func (self *DataRow) Cell(col int) *Cell {
-	return self.cells[col]
+func (row *DataRow) Cell(col int) *Cell {
+	return row.cells[col]
 }
 
-func (self *DataRow) AddCell() (ret *Cell) {
+func (row *DataRow) AddCell() (ret *Cell) {
 
 	ret = &Cell{
-		Col:   len(self.cells),
-		Row:   self.row,
-		Table: self.tab,
+		Col:   len(row.cells),
+		Row:   row.row,
+		Table: row.tab,
 	}
 
-	self.cells = append(self.cells, ret)
+	row.cells = append(row.cells, ret)
 	return
 }
 
-func (self *DataRow) IsEmpty() bool {
-	return len(self.cells) == 0
+func (row *DataRow) IsEmpty() bool {
+	return len(row.cells) == 0
 }
 
 func newDataRow(row int, tab *DataTable) *DataRow {

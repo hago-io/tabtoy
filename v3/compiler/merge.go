@@ -18,7 +18,7 @@ func createOutputTable(symbols *model.TypeTable, inputTab *model.DataTable) *mod
 	headerFields := symbols.AllFieldByName(inputTab.OriginalHeaderType)
 
 	if headerFields == nil {
-		report.ReportError("HeaderTypeNotFound", inputTab.OriginalHeaderType)
+		report.Error("HeaderTypeNotFound", inputTab.OriginalHeaderType)
 	}
 
 	// 将完整的表头添加到输出表的表头中
